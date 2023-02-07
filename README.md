@@ -2,4 +2,4 @@
 > middle_level implementation   
 > low_level implementation
 
-> ⚠️ all codes will be hand-written line by line 
+> ⚠️ all codes will be written by hand line-by-line 
