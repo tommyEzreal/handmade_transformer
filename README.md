@@ -6,6 +6,8 @@
 
 
 ```python
+# from https://www.youtube.com/watch?v=U0s0f995w14
+
 class SelfAttention(nn.Module):
   def __init__(self, embed_size, heads):
     super(SelfAttention, self).__init__()
@@ -61,7 +63,7 @@ class SelfAttention(nn.Module):
     return out 
 ```
 
-> not using einsum()    
+> not using einsum() - try to fix
 
 ```python
 class MultiHeadAttention(nn.Module):
