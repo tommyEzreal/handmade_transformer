@@ -92,7 +92,7 @@ class FeedForward(nn.Module):
     x = self.fc_2(x) # [batch, seq_len, embed_size ]
     return x 
 ```
-
+> transformer block = encoder_block 
 ```python
 class TransformerBlock(nn.Module):
   def __init__(self, embed_size, heads, forward_expansion, dropout):
