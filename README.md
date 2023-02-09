@@ -74,3 +74,257 @@ class MultiHeadAttention(nn.Module):
     return out # scaled_dot_product_attention
 
 ```
+
+```python
+class FeedForward(nn.Module):
+  def __init__(self, embed_size, forward_expansion, dropout):
+    super(FeedForward,self).__init__()
+
+    self.fc_1 = nn.Linear(embed_size, forward_expansion * embed_size)
+    self.fc_2 = nn.Linear(forward_expansion * embed_size, embed_size)
+    self.relu = nn.ReLU()
+    self.dropout = nn.Dropout(dropout)
+
+  def forward(self, x): # x: [batch, seq_len, embed_size]
+    x = self.fc_1(x) # [batch, seq_len, forward_expansion * embed_size]
+    x = self.relu(x) 
+    x = self.dropout(x)
+    x = self.fc_2(x) # [batch, seq_len, embed_size ]
+    return x 
+```
+
+```python
+class TransformerBlock(nn.Module):
+  def __init__(self, embed_size, heads, forward_expansion, dropout):
+    super(TransformerBlock, self).__init__()
+
+    self.attention = MultiHeadAttention(embed_size, heads)
+    self.attn_layer_norm = nn.LayerNorm(embed_size)
+    self.ff_layer_norm = nn.LayerNorm(embed_size)
+    self.feed_forward = FeedForward(embed_size,forward_expansion,dropout)
+    self.dropout = nn.Dropout(dropout)
+  
+  # 하나의 src 임베딩을 Q,K,V로 복제하여 입력 
+  def forward(self, src, src_mask):
+    # attention block & attn_layer_norm
+    _src = self.attention(query = src, key = src, value = src, mask = src_mask)
+    src = self.attn_layer_norm(src + self.dropout(_src)) # src 그대로와 attention 통과한 _src 둘다 layer_norm 통과 
+    
+    # feed_forward block & ff_layer_norm
+    _src =self.feed_forward(src)
+    src = self.ff_layer_norm(src + self.dropout(_src))    
+    
+    return src
+```
+
+```python
+class Encoder(nn.Module):
+  def __init__(self,
+             src_vocab_size, # input_dim (하나의 단어에 대한 원핫 인코딩의 차원)
+             embed_size, # hidden_dim (하나의 단어에 대한 임베딩 차원)
+             num_layers, # num_encoder_layer 
+             heads, # num_heads 
+             forward_expansion, #feedforward dim / embed_size
+             dropout,
+             device,
+             max_length):
+    super(Encoder, self).__init__()
+    
+    self.device = device
+
+    self.embed_size = embed_size
+
+    self.word_embedding = nn.Embedding(src_vocab_size, embed_size)
+    self.position_embedding = nn.Embedding(max_length, embed_size)
+
+    self.layers = nn.ModuleList(
+        [
+            TransformerBlock(
+                embed_size,
+                heads, 
+                forward_expansion = forward_expansion,
+                dropout = dropout
+            )
+        for _ in range(num_layers)] # encoder layer 수만큼 반복 
+    ) 
+    self.dropout = nn.Dropout(dropout)
+
+  def forward(self, src , src_mask):
+    # src, src_mask: [batch, src_len]
+    
+    N, src_len = src.shape
+
+    positions = torch.arange(0, src_len).expand(N, src_len).to(self.device)
+    # positions: [batch, src_len]
+
+    # out = src embedding + position embedding 
+    out = self.dropout(self.word_embedding(src) + self.position_embedding(positions))
+    
+    # 각 encoder layer마다 수행  
+    for layer in self.layers:
+      out = layer(out, src_mask) # 각 layer의 out이 다시 다음 Layer의 input(src)으로
+    # out: [batch, src_len, embed_size]
+
+    return out # 마지막 encoder layer의 출력
+```
+
+```python
+class DecoderBlock(nn.Module):
+  def __init__(self, embed_size, heads, forward_expansion, dropout, device):
+    super(DecoderBlock, self).__init__()
+
+    # 중략해서도 가능함 
+    # self.attention = MultiHeadAttention(embed_size, heads)
+    # self.norm = nn.LayerNorm(embed_size)
+    # self.transformer_block = TransformerBlock(
+    #     embed_size, heads, dropout, forward_expansion
+    # )
+    # self.dropout = nn.Dropout(dropout)
+
+    self.self_attention = MultiHeadAttention(embed_size, heads)
+    self.encoder_attention = MultiHeadAttention(embed_size, heads)
+
+    self.ff_layer_norm = nn.LayerNorm(embed_size)
+    self.attn_layer_norm = nn.LayerNorm(embed_size)
+    self.enc_layer_norm = nn.LayerNorm(embed_size)
+
+    self.feed_forward = FeedForward(embed_size, forward_expansion, dropout)
+
+    self.dropout = nn.Dropout(dropout)
+
+  def forward(self, trg, enc_out, trg_mask, src_mask):
+    
+    # trg: [batch, trg_len, embed_size]
+    # enc_out: [batch, src_len, embed_size]
+    # trg_mask : [batch, trg_len]
+    # src_mask : [batch, src_len]
+
+    # self attention block
+    _trg = self.self_attention(trg,trg,trg,trg_mask)
+    
+    # LayerNorm (_trg + trg둘다 입력으로) 
+    trg = self.attn_layer_norm(trg+self.dropout(_trg))
+    # trg : [batch, trg_len, embed_size]
+
+    # encoder attention block
+    # Query만 decoder입력인 trg로 받아오고 Key, Value를 encoder의 마지막 layer로 부터 받은 enc_out 
+    _trg = self.encoder_attention(trg, enc_out, enc_out, src_mask)
+
+    # LayerNorm()
+    trg = self.enc_layer_norm(trg + self.dropout(_trg))
+    # trg size same 
+
+    # feed_forward block
+    _trg = self.feed_forward(trg)
+
+    # LayerNorm()
+    trg = self.ff_layer_norm(trg + self.dropout(_trg))
+    # trg size same 
+
+    return trg
+```
+
+```python
+class Decoder(nn.Module):
+  def __init__(self,
+               trg_vocab_size,
+               embed_size,
+               num_layers,
+               heads,
+               forward_expansion,
+               dropout,
+               device,
+               max_length):
+    super(Decoder, self).__init__()
+
+    self.device = device
+    self.word_embedding = nn.Embedding(trg_vocab_size, embed_size)
+    self.position_embedding = nn.Embedding(max_length, embed_size)
+    
+    self.layers = nn.ModuleList(
+        [DecoderBlock(embed_size, heads, forward_expansion, dropout, device)
+        for _ in range(num_layers)]
+    )
+    self.fc_out = nn.Linear(embed_size, trg_vocab_size)
+    self.dropout = nn.Dropout(dropout)
+
+  def forward(self, trg, enc_out, src_mask, trg_mask):
+    # trg: [batch, trg_len]
+    # enc_out: [batch, src_len, embed_size]
+    # trg_mask: [batch, trg_len]
+    # src_mask: [batch, src_len]
+    N, trg_len = trg.shape
+    
+    positions = torch.arange(0, trg_len).expand(N, trg_len).to(self.device)
+    # positions: [batch, trg_len]
+
+    trg = self.dropout((self.word_embedding(trg))+ self.position_embedding(positions))
+    # trg: [batch, trg_len, embed_size]
+
+    for layer in self.layers:
+      trg = layer(trg, enc_out, trg_mask, src_mask) # src, trg mask 모두 사용 
+    
+    out = self.fc_out(trg)
+    return out # out : [batch, trg_len, out_dim]
+
+```
+
+```python
+class Transformer(nn.Module):
+  def __init__(self,
+               src_vocab_size,
+               trg_vocab_size,
+               src_pad_idx,
+               trg_pad_idx,
+               embed_size= 256,
+               num_layers =6,
+               forward_expansion = 4,
+               heads = 8,
+               dropout = 0,
+               device = "cuda",
+               max_length = 128): 
+    super(Transformer, self).__init__()
+
+
+    self.encoder = Encoder(src_vocab_size,
+                           embed_size,
+                           num_layers,
+                           heads,
+                           forward_expansion,
+                           dropout,
+                           device,
+                           max_length)
+
+    self.decoder = Decoder(trg_vocab_size,
+                           embed_size,
+                           num_layers,
+                           heads,
+                           forward_expansion,
+                           dropout,
+                           device,
+                           max_length)
+
+    self.src_pad_idx = src_pad_idx
+    self.trg_pad_idx = trg_pad_idx
+    self.device = device
+
+  # make_src_mask: 소스문장의 토큰 마스크값을 0으로 
+  def make_src_mask(self, src): # src: [batch, src_len]
+    src_mask = (src != self.src_pad_idx).unsqueeze(1).unsqueeze(2) # src_mask: [batch,1,1,src_len]
+    return src_mask.to(self.device)
+
+  # make_trg_mask: 타겟문장의 각 다음단어를 알 수 없도록 masking (time_step별로)
+  def make_trg_mask(self, trg): # trg: [batch, trg_len]
+    N, trg_len = trg.shape
+    trg_mask = torch.tril(torch.ones((trg_len, trg_len))).expand(
+        N, 1, trg_len, trg_len
+    ) 
+    return trg_mask.to(self.device)
+
+  def forward(self, src, trg):
+    src_mask = self.make_src_mask(src)
+    trg_mask = self.make_trg_mask(trg)
+    enc_out = self.encoder(src, src_mask) # with src mask 
+    out = self.decoder(trg, enc_out, src_mask, trg_mask) # put it into decoder
+    return out 
+```
