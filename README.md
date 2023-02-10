@@ -10,15 +10,14 @@ class MultiHeadAttention(nn.Module):
     # embed_size = d_model, heads = num_heads , head_dim = d_k
     super(MultiHeadAttention,self).__init__()
 
-    assert (self.head_dim * heads == embed_size), "Embed size needs to be div by heads"
-
     self.embed_size = embed_size # d_model  (임베딩차원 , hidden_dim)
     self.heads = heads # num_heads
     self.head_dim = embed_size // heads # dim of each head 
+    assert (self.head_dim * heads == embed_size), "Embed size needs to be div by heads"
 
-    self.fc_queries = nn.Linear(embed_size, embed_size ,bias=False) # fc layer of Query
-    self.fc_keys = nn.Linear(embed_size, embed_size, bias = False) # fc Key
-    self.fc_values = nn.Linear(embed_size, embed_size, bias = False) # fc Value
+    self.fc_queries = nn.Linear(embed_size, embed_size) # fc layer of Query
+    self.fc_keys = nn.Linear(embed_size, embed_size) # fc Key
+    self.fc_values = nn.Linear(embed_size, embed_size) # fc Value
 
     self.dropout = nn.Dropout(dropout)
     self.fc_out = nn.Linear(embed_size, embed_size)
@@ -74,6 +73,7 @@ class MultiHeadAttention(nn.Module):
     return out # scaled_dot_product_attention
 
 ```
+>
 
 ```python
 class FeedForward(nn.Module):
@@ -165,7 +165,7 @@ class Encoder(nn.Module):
       out = layer(out, src_mask) # 각 layer의 out이 다시 다음 Layer의 input(src)으로
     # out: [batch, src_len, embed_size]
 
-    return out # 마지막 encoder layer의 출력
+    return out # 마지막 encoder layer의 출력 
 ```
 
 ```python
@@ -223,7 +223,7 @@ class DecoderBlock(nn.Module):
 
     return trg
 ```
-
+> 
 ```python
 class Decoder(nn.Module):
   def __init__(self,
@@ -248,7 +248,7 @@ class Decoder(nn.Module):
     self.fc_out = nn.Linear(embed_size, trg_vocab_size)
     self.dropout = nn.Dropout(dropout)
 
-  def forward(self, trg, enc_out, src_mask, trg_mask):
+  def forward(self, trg, enc_out, trg_mask, src_mask):
     # trg: [batch, trg_len]
     # enc_out: [batch, src_len, embed_size]
     # trg_mask: [batch, trg_len]
@@ -277,12 +277,12 @@ class Transformer(nn.Module):
                src_pad_idx,
                trg_pad_idx,
                embed_size= 256,
-               num_layers =6,
-               forward_expansion = 4,
+               num_layers =3, # in paper,6(encoder, decoder both)
+               forward_expansion = 2,
                heads = 8,
-               dropout = 0,
+               dropout = 0.1,
                device = "cuda",
-               max_length = 128): 
+               max_length = 100): # 128 , 256, 512, .. based on your data
     super(Transformer, self).__init__()
 
 
@@ -325,6 +325,6 @@ class Transformer(nn.Module):
     src_mask = self.make_src_mask(src)
     trg_mask = self.make_trg_mask(trg)
     enc_out = self.encoder(src, src_mask) # with src mask 
-    out = self.decoder(trg, enc_out, src_mask, trg_mask) # put it into decoder
+    out = self.decoder(trg, enc_out, trg_mask, src_mask) # put it into decoder
     return out 
 ```
