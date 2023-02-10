@@ -102,8 +102,9 @@ class FeedForward(nn.Module):
     return x 
 ```
 
-## Encoder
+
 <br><br>
+## Encoder
 > transformer block = encoder_block 
 ![image](https://user-images.githubusercontent.com/100064247/218197650-da8be027-5a7f-4e59-a482-cb5e50a45cea.png)
 
