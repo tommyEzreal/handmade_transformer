@@ -1,6 +1,6 @@
 # handmade_transformer 🤖
    
-> low_level implementation
+> low_level study
 
 > ⚠️ my own implementation of transformer architecture 
 
