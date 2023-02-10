@@ -10,7 +10,7 @@ class TranslationDataset(Dataset):
     pad_token_idx = tokenizer.pad_token_id # pad_token_idx=0
     csv_datas = load_csv(dataframe)
     self.docs = []
-    # for line in csv_datas: # line[0] 한글, line[1] 영어
+    # line[0] :src, line[1]: trg
     for line in tqdm(csv_datas):
       input = tokenizer.encode(line[0],max_length=max_length,truncation=True)
       rest = max_length - len(input)
@@ -37,12 +37,12 @@ class TranslationDataset(Dataset):
     target_mask = target_mask & Variable(subsequent_mask(tgt.size(-1)).type_as(target_mask.data))
     return target_mask.squeeze()
 
-  def subsequent_mask(self,size):
+  def subsequent_mask(self,size): 
     attn_shape = (1, size, size)
     subsequent_mask = np.triu(np.ones(attn_shape), k=1).astype('uint8')
     return torch.from_numpy(subsequent_mask) == 0
 
-  def load_csv(self,dataframe):
+  def load_csv(self,dataframe): # dataframe에서 line 받아오기 
     lines = []
     for i in range(len(dataframe)):
       src_trg = [dataframe.values[i][0] , dataframe.values[i][1]] 
