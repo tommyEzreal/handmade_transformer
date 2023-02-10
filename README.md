@@ -78,7 +78,7 @@ class MultiHeadAttention(nn.Module):
 
 ```
 
-
+<br><br>
 
 <img width="700" alt="image" src="https://user-images.githubusercontent.com/100064247/218197012-a6128a5a-3575-4766-ad70-2118dcee85e6.png">
 
@@ -102,7 +102,7 @@ class FeedForward(nn.Module):
 ```
 
 
-
+<br><br>
 > transformer block = encoder_block 
 ![image](https://user-images.githubusercontent.com/100064247/218197650-da8be027-5a7f-4e59-a482-cb5e50a45cea.png)
 
@@ -182,7 +182,7 @@ class Encoder(nn.Module):
 
     return out # 마지막 encoder layer의 출력 
 ```
-
+<br><br>
 ![image](https://user-images.githubusercontent.com/100064247/218197876-f5e64f84-71c2-4fb9-b9fa-f5b794dd979a.png)
 
 
@@ -241,7 +241,7 @@ class DecoderBlock(nn.Module):
 
     return trg
 ```
-> 
+
 ```python
 class Decoder(nn.Module):
   def __init__(self,
@@ -286,7 +286,7 @@ class Decoder(nn.Module):
     return out # out : [batch, trg_len, out_dim]
 
 ```
-
+<br><br>
 ![image](https://user-images.githubusercontent.com/100064247/218198004-870f2079-4819-4691-acb8-10c0db44baec.png)
 
 
