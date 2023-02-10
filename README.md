@@ -98,7 +98,8 @@ class FeedForward(nn.Module):
     return x 
 ```
 > transformer block = encoder_block 
-<img width="956" alt="image" src="https://user-images.githubusercontent.com/100064247/218197534-3f534bc6-2025-4d66-b009-6d894aa31534.png">
+![image](https://user-images.githubusercontent.com/100064247/218197650-da8be027-5a7f-4e59-a482-cb5e50a45cea.png)
+
 
 
 ```python
