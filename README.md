@@ -98,6 +98,8 @@ class FeedForward(nn.Module):
     return x 
 ```
 > transformer block = encoder_block 
+<img width="700" alt="image" src="https://user-images.githubusercontent.com/100064247/218197466-7c9b71c8-e4d3-457c-a5a7-d2baa74cb86e.png">
+
 ```python
 class TransformerBlock(nn.Module):
   def __init__(self, embed_size, heads, forward_expansion, dropout):
