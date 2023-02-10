@@ -1,4 +1,4 @@
-# handmade_transformer
+# handmade_transformer 🤖
    
 > low_level implementation
 
