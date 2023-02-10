@@ -5,7 +5,7 @@
 > ⚠️ all codes will be written by hand line-by-line 
 
 
-![image](https://user-images.githubusercontent.com/100064247/218194035-e14245fb-f10d-43ab-8f80-88cb0c6dd78d.png)
+![image](https://user-images.githubusercontent.com/100064247/218194035-e14245fb-f10d-43ab-8f80-88cb0c6dd78d.png){: width="100%" height="100%"}
 
 
 ```python
