@@ -77,7 +77,7 @@ class MultiHeadAttention(nn.Module):
     return out # scaled_dot_product_attention
 
 ```
-<img width="500" alt="image" src="https://user-images.githubusercontent.com/100064247/218197012-a6128a5a-3575-4766-ad70-2118dcee85e6.png">
+<img width="700" alt="image" src="https://user-images.githubusercontent.com/100064247/218197012-a6128a5a-3575-4766-ad70-2118dcee85e6.png">
 
 
 ```python
