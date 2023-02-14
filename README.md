@@ -355,6 +355,14 @@ class Transformer(nn.Module):
 ```
 ## translation task 
 
+### data
+- corpus : 115000
+- train: 92000
+- valid, test: 11500 
+- source_vocab_size : 29004
+- target_vocab_size : 19736
+
+
 ### train setting
 ```python
 # model 
