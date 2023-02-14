@@ -31,9 +31,9 @@ class MultiHeadAttention(nn.Module):
     N = query.shape[0] # N = batch
       
     ```
-    # query = [batch_size, query_len, embed_size]
-    # key = [batch_size, key_len, embed_size]
-    # value = [batch_size, value_len, embed_size]
+    query = [batch_size, query_len, embed_size]
+    key = [batch_size, key_len, embed_size]
+    value = [batch_size, value_len, embed_size]
     ```
 
     # head개수만큼 나눠주기 (num_heads만큼의 K,Q,V)
