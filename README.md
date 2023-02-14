@@ -394,4 +394,53 @@ Test Loss: 2.390
 ---------------------------------------------------------
 
 ```
+### bleu score 
 
+```
+------------------------------
+Total BLEU Score = 15.31
+------------------------------
+Individual BLEU1 score = 46.40
+Individual BLEU2 score = 19.43
+Individual BLEU3 score = 10.17
+Individual BLEU4 score = 6.00
+------------------------------
+Cumulative BLEU1 score = 46.40
+Cumulative BLEU2 score = 30.03
+Cumulative BLEU3 score = 20.93
+Cumulative BLEU4 score = 15.31
+------------------------------
+```
+
+```
+[100/1000]
+예측: ['the', 'cell', 'phone', 'has', 'a', 'hit', 'and', 'the', 'internet', '.']
+정답: ['there', 'is', 'a', 'clock', 'between', 'a', 'cell', 'phone', 'and', 'a', 'scissor', '.']
+[200/1000]
+예측: ['i', 'do', '<unk>', 'want', 'to', 'meet', 'each', 'other', 'anymore', '.']
+정답: ['i', 'do', "n't", 'want', 'to', 'meet', 'you', 'personally', 'anymore', '.']
+[300/1000]
+예측: ['i', 'think', 'it', 'might', 'be', 'meaningful', 'and', '<unk>', '.']
+정답: ['it', 'would', 'be', 'difficult', 'to', 'understand', 'what', 'it', 'means', '.']
+[400/1000]
+예측: ['practice', 'for', 'a', 'putt', 'before', 'you', 'start', '.']
+정답: ['take', 'a', 'few', 'practice', 'swings', 'before', 'hitting', 'a', 'ball', '.']
+[500/1000]
+예측: ['i', 'need', 'to', 'check', 'the', 'volume', '.']
+정답: ['i', 'have', 'to', 'make', 'a', 'call', 'on', 'a', 'landline', '.']
+[600/1000]
+예측: ['it', 'looks', 'like', 'our', 'team', 'leader', 'asked', 'us', 'to', 'come', '.']
+정답: ['it', 'looks', 'like', 'a', 'new', 'bookkeeper', 'will', 'join', 'our', 'team', '.']
+[700/1000]
+예측: ['technology', 'gives', 'us', 'a', 'lot', 'easier', 'than', 'our', 'computer', '.']
+정답: ['computer', 'technology', 'has', 'improved', ' ', 'the', 'way', 'to', 'get', 'information', '.']
+[800/1000]
+예측: ['i', '<unk>', 'so', 'sorry', ',', 'i', 'did', '<unk>', 'speak', 'wrong', '.']
+정답: ['i', "'m", 'awfully', 'sorry', ',', 'it', 'was', 'wrong', 'of', 'me', '.']
+[900/1000]
+예측: ['the', 'answer', 'may', 'be', 'able', 'to', 'answer', 'the', 'question', '.']
+정답: ['the', 'resolution', 'of', 'that', 'question', 'may', 'be', 'difficult', '.']
+[1000/1000]
+예측: ['so', 'i', 'want', 'to', 'be', 'a', 'great', 'person', 'as', 'possible', '.']
+정답: ['so', 'i', 'hope', 'to', 'be', 'an', 'aircrew', 'as', 'soon', 'as', 'possible', '.']
+```
