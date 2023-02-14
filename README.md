@@ -369,7 +369,7 @@ class Transformer(nn.Module):
 ### train setting
 ```python
 # model 
-embed_size(hidden_dim) = 256
+embed_size = 256
 num_layers = 3
 num_heads = 8
 dropout = 0.2
