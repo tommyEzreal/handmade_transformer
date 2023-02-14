@@ -36,20 +36,20 @@ def make_iterator(batch_size,
       valid_dataset = convert_to_dataset(valid_path, src_field, trg_field)
 
       # use BucketIterator to make iterator 
-      train_iterator, valid_iterator = BucketIterator.splits(
-          datasets = (train_dataset,valid_dataset),
-          batch_sizes= (batch_size,batch_size),
-          device=device,
-          sort=False)
+      train_iterator, valid_iterator = BucketIterator.splits(datasets = (train_dataset,valid_dataset),
+                                                             batch_sizes= (batch_size,batch_size),
+                                                             device=device,
+                                                             sort=False)
 
       return train_iterator, valid_iterator
+
 
     else: # 'test'
       test_dataset = convert_to_dataset(test_path, src_field, trg_field)
       test_iterator = BucketIterator(test_dataset,
-                                      batch_size = batch_size,
-                                      device = device,
-                                      sort=False)
+                                     batch_size = batch_size,
+                                     device = device,
+                                     sort=False)
       return test_iterator
 
 
