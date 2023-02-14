@@ -353,3 +353,24 @@ class Transformer(nn.Module):
     out = self.decoder(trg, enc_out, trg_mask, src_mask) # put it into decoder
     return out 
 ```
+## translation task 
+
+### train result
+
+```
+---------------------------------------------------------
+| Epoch: 01  | Train Loss:  5.235  | Valid Loss:  4.350
+---------------------------------------------------------
+| Epoch: 02  | Train Loss:  4.155  | Valid Loss:  3.833
+---------------------------------------------------------
+| Epoch: 03  | Train Loss:  3.726  | Valid Loss:  3.499
+---------------------------------------------------------
+| Epoch: 04  | Train Loss:  3.399  | Valid Loss:  3.272
+---------------------------------------------------------
+                  . . . . 
+| Epoch: 19  | Train Loss:  1.478  | Valid Loss:  2.413
+---------------------------------------------------------
+| Epoch: 20  | Train Loss:  1.427  | Valid Loss:  2.409
+---------------------------------------------------------
+```
+
