@@ -356,6 +356,7 @@ class Transformer(nn.Module):
 ## translation task 
 
 ### data
+#### ko-en sentence pair
 - corpus : 115000
 - train: 92000
 - valid, test: 11500 
