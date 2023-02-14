@@ -355,6 +355,22 @@ class Transformer(nn.Module):
 ```
 ## translation task 
 
+### train setting
+```python
+# model 
+embed_size(hidden_dim) = 256
+num_layers = 3
+num_heads = 8
+dropout = 0.2
+max_length = 100
+
+# hyperparameters
+epochs = 20
+batch_size = 256
+learning_rate = 5e-4
+optimizer = Adam
+```
+
 ### train result
 
 ```
@@ -372,5 +388,10 @@ class Transformer(nn.Module):
 ---------------------------------------------------------
 | Epoch: 20  | Train Loss:  1.427  | Valid Loss:  2.409
 ---------------------------------------------------------
+
+---------------------------------------------------------
+Test Loss: 2.390
+---------------------------------------------------------
+
 ```
 
