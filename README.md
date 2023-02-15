@@ -367,6 +367,8 @@ class Transformer(nn.Module):
 
 
 ### train setting
+- 21,554,456 trainable parameters
+
 ```python
 # model 
 embed_size = 256
