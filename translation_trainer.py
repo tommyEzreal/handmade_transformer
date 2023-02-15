@@ -5,6 +5,9 @@ import random
 
 from model.transformer import Transformer
 from optimizer import ScheduledOptim
+from params import 
+
+from tqdm.auto import tqdm 
 
 
 random.seed(0)
@@ -16,6 +19,9 @@ torch.manual_seed(0)
 class TransTrainer:
     def __init__(self, mode, params, train_iter=None, valid_iter=None, test_iter=None):
         # mode: (str) 'train' / 'test'
+        # params: (dict) 
+        # train/valid/test_iter: (iterator)
+        
         self.params = params
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.model = Transformer(self.params['src_vocab_size'],
@@ -29,6 +35,7 @@ class TransTrainer:
                                  self.params['dropout'],
                                  self.params['max_length'],
                                  self.params['device']).to(self.device)
+        
         print(self.model)
 
         self.criterion = torch.nn.CrossEntropyLoss(ignore_index = self.params['trg_pad_idx'])
