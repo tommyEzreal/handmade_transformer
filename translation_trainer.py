@@ -10,13 +10,6 @@ random.seed(0)
 torch.manual_seed(0)
 
 
-# trainer class 
-
-import torch
-import random
-
-random.seed(0)
-torch.manual_seed(0)
 
 
 class TransTrainer:
