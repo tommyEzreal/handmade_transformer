@@ -46,7 +46,3 @@ def make_iterator(batch_size,
                                      device = device,
                                      sort=False)
       return test_iterator
-
-
-
-
