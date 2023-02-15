@@ -4,6 +4,7 @@ import torch
 import random
 
 from model.transformer import Transformer
+from optimizer import ScheduledOptim
 
 
 random.seed(0)
