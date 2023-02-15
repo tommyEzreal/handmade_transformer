@@ -21,11 +21,6 @@ def make_iterator(batch_size,
     # batch_size: (int)
     # mode: (str) 'train'/'test' 
     # train/valid/test_path: (str) csv_data_dir
-  
-    # file_src = open('src.pickle', 'rb')
-    # src = pickle.load(file_src)
-    # file_trg = open('trg.pickle', 'rb')
-    # trg = pickle.load(file_trg)
 
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
