@@ -457,3 +457,7 @@ Cumulative BLEU4 score = 15.31
 예측: ['so', 'i', 'want', 'to', 'be', 'a', 'great', 'person', 'as', 'possible', '.']
 정답: ['so', 'i', 'hope', 'to', 'be', 'an', 'aircrew', 'as', 'soon', 'as', 'possible', '.']
 ```
+## Reference
+https://github.com/Huffon/pytorch-transformer-kor-eng    
+https://github.com/nawnoes/pytorch-transformer     
+https://github.com/hyunwoongko/transformer      
