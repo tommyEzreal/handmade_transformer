@@ -112,6 +112,12 @@ class FeedForward(nn.Module):
 > working on..    
 
 <br><br>
+## Positional Encoding
+<img width="810" alt="image" src="https://user-images.githubusercontent.com/100064247/219105515-55b41343-577d-4c3d-ab68-fb7265ecc995.png">      
+> working on..
+
+
+
 
 <br><br>
 ## Encoder
