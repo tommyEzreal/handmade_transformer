@@ -398,6 +398,11 @@ learning_rate = 5e-4
 optimizer = Adam
 ```
 
+### lr scheduler & warmup steps q  
+<img width="823" alt="image" src="https://user-images.githubusercontent.com/100064247/219110427-f0cf848f-3998-440d-973f-71c9c0cb2f98.png">      
+> working on..
+
+
 ### train result
 
 ```
