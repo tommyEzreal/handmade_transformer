@@ -70,14 +70,9 @@ class TransTrainer:
             optimizer = ScheduledOptim(torch.optim.Adam(self.model.parameters(),
                                                         betas = [0.9, 0.98],
                                                         eps = 1e-9),
-                                                        warmup_steps=4000
-                                                        )
-        
+                                                        warmup_steps=4000)                                                             
         elif optimizer == 'SGD':
-            optimizer = ScheduledOptim(torch.optim.SGD(self.model.parameters(),lr=5e-4))
-                                                      
-                                                      
-                                                        
+            optimizer = ScheduledOptim(torch.optim.SGD(self.model.parameters(),lr=5e-4))                                                                                                                                                                  
 
         best_valid_loss = float('inf')
 
