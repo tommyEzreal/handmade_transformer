@@ -7,7 +7,7 @@ from model.transformer import Transformer
 from optimizer import ScheduledOptim
 from params import 
 
-from tqdm.auto import tqdm 
+from tqdm.auto import tqdm  
 
 
 random.seed(0)
