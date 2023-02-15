@@ -459,6 +459,8 @@ Cumulative BLEU4 score = 15.31
 ```
 ## Reference
 https://arxiv.org/abs/1706.03762
+https://pytorch.org/docs/stable/nn.html
+https://github.com/pytorch/tutorials/blob/0d8c59f0822bffc3b1b3e15d3eeed4e24d2918a0/beginner_source/transformer_tutorial.py
 https://github.com/Huffon/pytorch-transformer-kor-eng    
 https://github.com/nawnoes/pytorch-transformer     
 https://github.com/hyunwoongko/transformer      
