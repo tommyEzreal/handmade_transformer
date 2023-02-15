@@ -358,7 +358,7 @@ class Transformer(nn.Module):
 ## translation task 
 
 ### data
-#### ko-en sentence pair
+#### ko-en sentence pair ( AI Hub에서 한국어-영어 번역 말뭉치 / 구어체 데이터 1 & 2)
 - corpus : 115000
 - train: 92000
 - valid, test: 11500 
