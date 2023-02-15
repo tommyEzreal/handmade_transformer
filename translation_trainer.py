@@ -5,6 +5,16 @@ import random
 
 from model.transformer import Transformer
 
+
+random.seed(0)
+torch.manual_seed(0)
+
+
+# trainer class 
+
+import torch
+import random
+
 random.seed(0)
 torch.manual_seed(0)
 
@@ -14,7 +24,6 @@ class TransTrainer:
         # mode: (str) 'train' / 'test'
         self.params = params
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        # build transformer model 
         self.model = Transformer(self.params['src_vocab_size'],
                                  self.params['trg_vocab_size'],
                                  self.params['src_pad_idx'],
@@ -26,7 +35,8 @@ class TransTrainer:
                                  self.params['dropout'],
                                  self.params['max_length'],
                                  self.params['device']).to(self.device)
-        
+        print(self.model)
+
         self.criterion = torch.nn.CrossEntropyLoss(ignore_index = self.params['trg_pad_idx'])
         
 
@@ -53,13 +63,21 @@ class TransTrainer:
 
 
 
-    def train(self, epochs = 10, learning_rate = 5e-4, optimizer = 'Adam', clip=1):
+    def train(self, epochs = 10, optimizer = 'Adam', clip=1):
         
         if optimizer == 'Adam':
-            optimizer = torch.optim.Adam(self.model.parameters(), lr = learning_rate)
+            optimizer = ScheduledOptim(torch.optim.Adam(self.model.parameters(),
+                                                        betas = [0.9, 0.98],
+                                                        eps = 1e-9),
+                                                        warmup_steps=4000
+                                                        )
         
         elif optimizer == 'SGD':
-            optimizer = torch.optim.SGD(self.model.parameters(), lr= learning_rate)
+            optimizer = ScheduledOptim(torch.optim.SGD(self.model.parameters(),
+                                                        betas = [0.9, 0.98],
+                                                        eps = 1e-9),
+                                                        warmup_steps=4000
+                                                        )
 
         best_valid_loss = float('inf')
 
