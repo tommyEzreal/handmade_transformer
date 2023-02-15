@@ -103,7 +103,13 @@ class FeedForward(nn.Module):
     x = self.fc_2(x) # [batch, seq_len, embed_size ]
     return x 
 ```
+<br><br>
+## Layer Normalization
+<img width="807" alt="image" src="https://user-images.githubusercontent.com/100064247/219100644-d2b1da0c-d94b-4524-a729-b1ea954a3ce5.png">      
+<img width="810" alt="image" src="https://user-images.githubusercontent.com/100064247/219100728-cb35e6a3-bb1c-4935-857c-0a9f3a7b06bc.png">
+> working on..
 
+<br><br>
 
 <br><br>
 ## Encoder
