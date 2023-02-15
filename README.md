@@ -429,10 +429,9 @@ class ScheduledOptim:
 
 # usage
 optimizer = ScheduledOptim(torch.optim.Adam(self.model.parameters(),
-                                                        betas = [0.9, 0.98],
-                                                        eps = 1e-9),
-                                                        warmup_steps=4000
-                                                        )
+                                            betas = [0.9, 0.98],
+                                            eps = 1e-9), warmup_steps=4000))
+                                                        
 
 ```
 
