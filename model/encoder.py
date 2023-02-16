@@ -1,3 +1,5 @@
+from positional_encoding import PositionalEncoding
+
 class TransformerBlock(nn.Module):
   def __init__(self, embed_size, heads, forward_expansion, dropout):
     super(TransformerBlock, self).__init__()
@@ -21,6 +23,8 @@ class TransformerBlock(nn.Module):
     return src
   
   
+# apply position_encoding 
+
 class Encoder(nn.Module):
   def __init__(self,
              src_vocab_size, # input_dim (하나의 단어에 대한 원핫 인코딩의 차원)
@@ -38,7 +42,7 @@ class Encoder(nn.Module):
     self.embed_size = embed_size
 
     self.word_embedding = nn.Embedding(src_vocab_size, embed_size)
-    self.position_embedding = nn.Embedding(max_length, embed_size)
+    self.position_embedding = PositionalEncoding(max_length, embed_size)
 
     self.layers = nn.ModuleList(
         [
@@ -52,16 +56,15 @@ class Encoder(nn.Module):
     ) 
     self.dropout = nn.Dropout(dropout)
 
-  def forward(self, src , src_mask):
+  def forward(self, src , src_mask): # src: src_sent from Transformer. 
     # src, src_mask: [batch, src_len]
+
+    # out = src embedding + position encoding 
     
-    N, src_len = src.shape
-
-    positions = torch.arange(0, src_len).expand(N, src_len).to(self.device)
-    # positions: [batch, src_len]
-
-    # out = src embedding + position embedding 
-    out = self.dropout(self.word_embedding(src) + self.position_embedding(positions))
+    # word_embedding: [batch, src_len, embed_size]
+    # position_embedding: [src_len, embed_size]
+    # for each batch, same positional encoding will be applied 
+    out = self.dropout(self.word_embedding(src) + self.position_embedding(src))
     
     # 각 encoder layer마다 수행  
     for layer in self.layers:
