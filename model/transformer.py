@@ -1,3 +1,7 @@
+from model.encoder import Encoder
+from model.decoder import Decoder
+
+
 class Transformer(nn.Module):
   def __init__(self,
                src_vocab_size,
