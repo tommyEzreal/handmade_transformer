@@ -1,6 +1,6 @@
 # handmade_transformer 🤖
    
-> low_level study
+> try to implement "Attention is all you need" in low_level as possible 
 
 > ⚠️ my own implementation of transformer architecture 
 
