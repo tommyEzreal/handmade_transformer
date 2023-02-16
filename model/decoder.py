@@ -1,4 +1,4 @@
-from positional_encoding import PositionalEncoding
+from model.positional_encoding import PositionalEncoding
 
 
 class DecoderBlock(nn.Module):
