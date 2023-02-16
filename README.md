@@ -1,8 +1,7 @@
 # handmade_transformer 🤖
-   
-> try to implement "Attention is all you need" in low_level as possible 
-
-> ⚠️ my own implementation of transformer architecture 
+> ⚠️ my own implementation of transformer architecture      
+> try to implement "Attention is all you need" in low_level as possible       
+ 
 
 <br><br>
 ## Multi-Head Attention
