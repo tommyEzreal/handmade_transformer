@@ -2,7 +2,17 @@
 > ⚠️ my own implementation of transformer architecture      
 > try to implement "Attention is all you need(2017)" in low_level as possible    
 > original paper : https://arxiv.org/abs/1706.03762      
- 
+
+<br><br>
+## requirements
+```
+torch==1.13.1
+spacy==3.4.4
+soynlp==0.0.493
+torchtext==0.6.0
+en-core-web-sm==2.1.0
+
+```
 
 <br><br>
 ## Multi-Head Attention
