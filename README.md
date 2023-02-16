@@ -4,7 +4,7 @@
 > original paper : https://arxiv.org/abs/1706.03762      
 
 <br><br>
-## requirements
+## Requirements
 ```
 torch==1.13.1
 spacy==3.4.4
@@ -378,7 +378,7 @@ class Transformer(nn.Module):
     out = self.decoder(trg, enc_out, trg_mask, src_mask) # put it into decoder
     return out 
 ```
-## translation task 
+## Translation task 
 
 ### data
 #### ko-en sentence pair ( AI Hub 한국어-영어 번역 말뭉치 / 구어체 데이터 1 & 2)
