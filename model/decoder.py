@@ -1,3 +1,6 @@
+from positional_encoding import PositionalEncoding
+
+
 class DecoderBlock(nn.Module):
   def __init__(self, embed_size, heads, forward_expansion, dropout, device):
     super(DecoderBlock, self).__init__()
@@ -52,6 +55,10 @@ class DecoderBlock(nn.Module):
 
     return trg
 
+
+  
+# apply positional encoding 
+
 class Decoder(nn.Module):
   def __init__(self,
                trg_vocab_size,
@@ -66,7 +73,7 @@ class Decoder(nn.Module):
 
     self.device = device
     self.word_embedding = nn.Embedding(trg_vocab_size, embed_size)
-    self.position_embedding = nn.Embedding(max_length, embed_size)
+    self.position_embedding = PositionalEncoding(max_length, embed_size)
     
     self.layers = nn.ModuleList(
         [DecoderBlock(embed_size, heads, forward_expansion, dropout, device)
@@ -80,12 +87,9 @@ class Decoder(nn.Module):
     # enc_out: [batch, src_len, embed_size]
     # trg_mask: [batch, trg_len]
     # src_mask: [batch, src_len]
-    N, trg_len = trg.shape
-    
-    positions = torch.arange(0, trg_len).expand(N, trg_len).to(self.device)
-    # positions: [batch, trg_len]
 
-    trg = self.dropout((self.word_embedding(trg))+ self.position_embedding(positions))
+
+    trg = self.dropout((self.word_embedding(trg))+ self.position_embedding(trg))
     # trg: [batch, trg_len, embed_size]
 
     for layer in self.layers:
