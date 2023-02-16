@@ -1,4 +1,5 @@
 from model.positional_encoding import PositionalEncoding
+from model.feed_forward import FeedForward
 
 class TransformerBlock(nn.Module):
   def __init__(self, embed_size, heads, forward_expansion, dropout):
