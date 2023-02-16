@@ -1,7 +1,8 @@
 # handmade_transformer 🤖
 > ⚠️ my own implementation of transformer architecture      
 > try to implement "Attention is all you need(2017)" in low_level as possible    
-> original paper : https://arxiv.org/abs/1706.03762         
+> original paper : https://arxiv.org/abs/1706.03762 
+>             
 > 23.01.28 ~ working on 💪🏻
 <br><br>
 ## Requirements
