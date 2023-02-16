@@ -1,5 +1,5 @@
 from model.positional_encoding import PositionalEncoding
-
+frim model.feedforward import FeedForward
 
 class DecoderBlock(nn.Module):
   def __init__(self, embed_size, heads, forward_expansion, dropout, device):
