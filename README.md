@@ -11,7 +11,6 @@ spacy==3.4.4
 soynlp==0.0.493
 torchtext==0.6.0
 en-core-web-sm==2.1.0
-
 ```
 
 <br><br>
