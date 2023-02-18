@@ -212,7 +212,7 @@ class Encoder(nn.Module):
     self.embed_size = embed_size
 
     self.word_embedding = nn.Embedding(src_vocab_size, embed_size)
-    self.position_embedding = nn.Embedding(max_length, embed_size)
+    self.position_embedding = PositionalEncoding(max_length, embed_size)
 
     self.layers = nn.ModuleList(
         [
@@ -228,14 +228,9 @@ class Encoder(nn.Module):
 
   def forward(self, src , src_mask):
     # src, src_mask: [batch, src_len]
-    
-    N, src_len = src.shape
-
-    positions = torch.arange(0, src_len).expand(N, src_len).to(self.device)
-    # positions: [batch, src_len]
 
     # out = src embedding + position embedding 
-    out = self.dropout(self.word_embedding(src) + self.position_embedding(positions))
+    out = self.dropout(self.word_embedding(src) + self.position_embedding(src))
     
     # 각 encoder layer마다 수행  
     for layer in self.layers:
@@ -320,7 +315,7 @@ class Decoder(nn.Module):
 
     self.device = device
     self.word_embedding = nn.Embedding(trg_vocab_size, embed_size)
-    self.position_embedding = nn.Embedding(max_length, embed_size)
+    self.position_embedding = PositionalEncoding(max_length, embed_size)
     
     self.layers = nn.ModuleList(
         [DecoderBlock(embed_size, heads, forward_expansion, dropout, device)
@@ -334,12 +329,8 @@ class Decoder(nn.Module):
     # enc_out: [batch, src_len, embed_size]
     # trg_mask: [batch, trg_len]
     # src_mask: [batch, src_len]
-    N, trg_len = trg.shape
-    
-    positions = torch.arange(0, trg_len).expand(N, trg_len).to(self.device)
-    # positions: [batch, trg_len]
 
-    trg = self.dropout((self.word_embedding(trg))+ self.position_embedding(positions))
+    trg = self.dropout((self.word_embedding(trg))+ self.position_embedding(src))
     # trg: [batch, trg_len, embed_size]
 
     for layer in self.layers:
