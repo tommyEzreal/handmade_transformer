@@ -350,7 +350,7 @@ class Decoder(nn.Module):
     # trg_mask: [batch, trg_len]
     # src_mask: [batch, src_len]
 
-    trg = self.dropout((self.word_embedding(trg))+ self.position_embedding(src))
+    trg = self.dropout((self.word_embedding(trg))+ self.position_embedding(trg))
     # trg: [batch, trg_len, embed_size]
 
     for layer in self.layers:
