@@ -4,14 +4,15 @@ import torch.nn as nn
 from model.positional_encoding import PositionalEncoding
 from model.multi_head_attention import MultiHeadAttention
 from model.feedforward import FeedForward
+from model.layernorm import LayerNormalization
 
 class TransformerBlock(nn.Module):
   def __init__(self, embed_size, heads, forward_expansion, dropout):
     super(TransformerBlock, self).__init__()
 
     self.attention = MultiHeadAttention(embed_size, heads)
-    self.attn_layer_norm = nn.LayerNorm(embed_size)
-    self.ff_layer_norm = nn.LayerNorm(embed_size)
+    self.attn_layer_norm = LayerNormalization(embed_size)
+    self.ff_layer_norm = LayerNormalization(embed_size)
     self.feed_forward = FeedForward(embed_size,forward_expansion,dropout)
     self.dropout = nn.Dropout(dropout)
   
