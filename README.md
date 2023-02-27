@@ -122,8 +122,10 @@ class FeedForward(nn.Module):
 
 > https://arxiv.org/abs/1607.06450
 ```python
-class LayerNormalization():
+class LayerNormalization(nn.Module):
   def __init__(self, embed_size, epsilon=1e-9):
+    super(LayerNormalization, self).__init__()
+    
     self.epsilon = epsilon 
     self.gamma = nn.Parameter(torch.ones(embed_size))
     self.beta = nn.Parameter(torch.zeros(embed_size))
