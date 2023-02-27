@@ -248,7 +248,8 @@ class Encoder(nn.Module):
   def forward(self, src , src_mask):
     # src, src_mask: [batch, src_len]
 
-    # out = src embedding + position embedding 
+    # out = src embedding + positional encoding 
+    # for each batch, same positional encoding will be applied 
     out = self.dropout(self.word_embedding(src) + self.position_embedding(src))
     
     # 각 encoder layer마다 수행  
