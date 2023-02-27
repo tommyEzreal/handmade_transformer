@@ -195,8 +195,8 @@ class TransformerBlock(nn.Module):
     super(TransformerBlock, self).__init__()
 
     self.attention = MultiHeadAttention(embed_size, heads)
-    self.attn_layer_norm = nn.LayerNorm(embed_size)
-    self.ff_layer_norm = nn.LayerNorm(embed_size)
+    self.attn_layer_norm = LayerNormalization(embed_size)
+    self.ff_layer_norm = LayerNormalization(embed_size)
     self.feed_forward = FeedForward(embed_size,forward_expansion,dropout)
     self.dropout = nn.Dropout(dropout)
   
@@ -280,9 +280,9 @@ class DecoderBlock(nn.Module):
     self.self_attention = MultiHeadAttention(embed_size, heads)
     self.encoder_attention = MultiHeadAttention(embed_size, heads)
 
-    self.ff_layer_norm = nn.LayerNorm(embed_size)
-    self.attn_layer_norm = nn.LayerNorm(embed_size)
-    self.enc_layer_norm = nn.LayerNorm(embed_size)
+    self.ff_layer_norm = LayerNormalization(embed_size)
+    self.attn_layer_norm = LayerNormalization(embed_size)
+    self.enc_layer_norm = LayerNormalization(embed_size)
 
     self.feed_forward = FeedForward(embed_size, forward_expansion, dropout)
 
