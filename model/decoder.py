@@ -4,6 +4,7 @@ import torch.nn as nn
 from model.positional_encoding import PositionalEncoding
 from model.multi_head_attention import MultiHeadAttention
 from model.feedforward import FeedForward
+from model.layernorm import LayerNormalization
 
 class DecoderBlock(nn.Module):
   def __init__(self, embed_size, heads, forward_expansion, dropout, device):
@@ -20,9 +21,9 @@ class DecoderBlock(nn.Module):
     self.self_attention = MultiHeadAttention(embed_size, heads)
     self.encoder_attention = MultiHeadAttention(embed_size, heads)
 
-    self.ff_layer_norm = nn.LayerNorm(embed_size)
-    self.attn_layer_norm = nn.LayerNorm(embed_size)
-    self.enc_layer_norm = nn.LayerNorm(embed_size)
+    self.ff_layer_norm = LayerNormalization(embed_size)
+    self.attn_layer_norm = LayerNormalization(embed_size)
+    self.enc_layer_norm = LayerNormalization(embed_size)
 
     self.feed_forward = FeedForward(embed_size, forward_expansion, dropout)
 
