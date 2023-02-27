@@ -122,8 +122,6 @@ class FeedForward(nn.Module):
 
 > https://arxiv.org/abs/1607.06450
 ```python
-import torch.nn as nn 
-
 class LayerNormalization():
   def __init__(self, embed_size, epsilon=1e-9):
     self.epsilon = epsilon 
