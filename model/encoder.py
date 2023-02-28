@@ -48,7 +48,7 @@ class Encoder(nn.Module):
     self.embed_size = embed_size
 
     self.word_embedding = nn.Embedding(src_vocab_size, embed_size)
-    self.position_embedding = PositionalEncoding(max_length, embed_size)
+    self.position_encoding = PositionalEncoding(max_length, embed_size)
 
     self.layers = nn.ModuleList(
         [
@@ -70,7 +70,7 @@ class Encoder(nn.Module):
     # word_embedding: [batch, src_len, embed_size]
     # position_embedding: [src_len, embed_size]
     # for each batch, same positional encoding will be applied 
-    out = self.dropout(self.word_embedding(src) + self.position_embedding(src))
+    out = self.dropout(self.word_embedding(src) + self.position_encoding(src))
     
     # 각 encoder layer마다 수행  
     for layer in self.layers:
