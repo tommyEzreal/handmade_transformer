@@ -78,7 +78,7 @@ class Decoder(nn.Module):
 
     self.device = device
     self.word_embedding = nn.Embedding(trg_vocab_size, embed_size)
-    self.position_embedding = PositionalEncoding(max_length, embed_size)
+    self.position_encoding = PositionalEncoding(max_length, embed_size)
     
     self.layers = nn.ModuleList(
         [DecoderBlock(embed_size, heads, forward_expansion, dropout, device)
@@ -94,7 +94,7 @@ class Decoder(nn.Module):
     # src_mask: [batch, src_len]
 
 
-    trg = self.dropout((self.word_embedding(trg))+ self.position_embedding(trg))
+    trg = self.dropout((self.word_embedding(trg))+ self.position_encoding(trg))
     # trg: [batch, trg_len, embed_size]
 
     for layer in self.layers:
