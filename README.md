@@ -231,7 +231,7 @@ class Encoder(nn.Module):
     self.embed_size = embed_size
 
     self.word_embedding = nn.Embedding(src_vocab_size, embed_size)
-    self.position_embedding = PositionalEncoding(max_length, embed_size)
+    self.position_encoding = PositionalEncoding(max_length, embed_size)
 
     self.layers = nn.ModuleList(
         [
@@ -250,7 +250,7 @@ class Encoder(nn.Module):
 
     # out = src embedding + positional encoding 
     # for each batch, same positional encoding will be applied 
-    out = self.dropout(self.word_embedding(src) + self.position_embedding(src))
+    out = self.dropout(self.word_embedding(src) + self.position_encoding(src))
     
     # 각 encoder layer마다 수행  
     for layer in self.layers:
@@ -335,7 +335,7 @@ class Decoder(nn.Module):
 
     self.device = device
     self.word_embedding = nn.Embedding(trg_vocab_size, embed_size)
-    self.position_embedding = PositionalEncoding(max_length, embed_size)
+    self.position_encoding = PositionalEncoding(max_length, embed_size)
     
     self.layers = nn.ModuleList(
         [DecoderBlock(embed_size, heads, forward_expansion, dropout, device)
@@ -350,7 +350,7 @@ class Decoder(nn.Module):
     # trg_mask: [batch, trg_len]
     # src_mask: [batch, src_len]
 
-    trg = self.dropout((self.word_embedding(trg))+ self.position_embedding(trg))
+    trg = self.dropout((self.word_embedding(trg))+ self.position_encoding(trg))
     # trg: [batch, trg_len, embed_size]
 
     for layer in self.layers:
