@@ -177,7 +177,7 @@ class PositionalEncoding(nn.Module):
   
     return self.pe[:seq_len, :]
 ```
-    ### Label Smoothing     
+   ### Label Smoothing     
     ![image](https://user-images.githubusercontent.com/100064247/223716969-4109345f-4cdd-4fd6-9606-aa123c70257d.png)    
     > working on..
 
