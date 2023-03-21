@@ -451,7 +451,6 @@ max_length = 100
 # hyperparameters
 epochs = 20
 batch_size = 256
-learning_rate = 5e-4
 optimizer = Adam
 ```
 
